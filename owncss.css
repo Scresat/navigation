@@ -1,0 +1,49 @@
+.pynotebook{
+  margin-top: 70px;
+}
+
+#headerIwant{
+  background-image: url("images/lights.jpeg");
+}
+
+#thehtitle{
+  text-shadow: 1.5px 1.5px 3px black;
+}
+.title-info{
+  text-shadow: 1px 1px 2px black;
+}
+.navbar-default{
+  opacity: 0.95;
+}
+.navbar-transparent{
+  opacity: 1.0;
+}
+
+.main{
+  margin-top: 2%;
+}
+.landing-page-cs{
+  margin-top: 90px;
+}
+.no-top{
+  margin-top: 70px;
+}
+
+.thepdf{
+  height: 1200px;
+  width: 100%;
+}
+
+
+.notebook-links{
+  font-size: 1.3em;
+  font-weight: 400;
+}
+.notebook-links:hover{
+  text-decoration:none;
+  text-shadow: 0.1px 0.1px 0.1px grey;
+
+}
+/*.computerscience{
+  margin-top: 80px;
+}*/
