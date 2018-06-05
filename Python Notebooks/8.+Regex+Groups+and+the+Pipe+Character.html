@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>7. Regular Expression Basics</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>8. Regex Groups and the Pipe Character</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 <style type="text/css">
@@ -11766,8 +11766,7 @@ div#notebook {
         }
     });
     </script>
-    <!-- End of mathjax configuration -->
-    <!--     Fonts and icons     -->
+    <!-- End of mathjax configuration --><!--     Fonts and icons     -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
@@ -11775,7 +11774,8 @@ div#notebook {
     <!-- CSS Files -->
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
     <link href="../assets/css/material-kit.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="../owncss.css"></head>
+    <link rel="stylesheet" href="../owncss.css">
+    </head>
     <body class="pynotebook">
     <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
       <div class="container">
@@ -11815,16 +11815,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Regular expression allow you to specify a pattern of text to search for.<br>Regular expressions are sort of a simplified mini language for specifying text pattern.<br>One example of text pattern is a phone number.<br>For US and Canada the phone number is like a following<br>414-555-0000<br><br>The first 3 digits are area code.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>We as a human know that the above number is phone number while 414,555,0000 is not.</p>
+<p>Phone number is like 444-444-4444</p>
 
 </div>
 </div>
@@ -11834,38 +11825,33 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">isPhoneNumber</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>      <span class="c1">#determining if the phone number is us, canadian style or not.</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">12</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;not 12 digits&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">False</span>          <span class="c1">#not phone number sized</span>
-
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">isdecimal</span><span class="p">():</span>      <span class="c1">#if not a decimal/number character we can use </span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;first 3 characters are not numbers&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">False</span>
-
-    <span class="k">if</span> <span class="n">text</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;-&quot;</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;missing dash after the area code&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">False</span>       <span class="c1">#missing dash</span>
-
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">7</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">isdecimal</span><span class="p">():</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;three characters in the middle are not numbers&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">False</span>
-
-    <span class="k">if</span> <span class="n">text</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;-&quot;</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;missing second dash&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">False</span>
-
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">12</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">isdecimal</span><span class="p">():</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;last four characters are not numbers&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">False</span>      <span class="c1">#missing the last 4 digits</span>
-
-    <span class="k">return</span> <span class="kc">True</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+<span class="n">phoneNumRegex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\d\d\d-\d\d\d-\d\d\d\d&quot;</span><span class="p">)</span>
+<span class="n">matchobject</span> <span class="o">=</span> <span class="n">phoneNumRegex</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;my number is 434-343-4343&quot;</span><span class="p">)</span>
+<span class="n">matchobject</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
 </pre></div>
 
 </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[1]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;434-343-4343&#39;</pre>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -11874,7 +11860,7 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Take a note that a function does not execute anything after it encounters a return statement.</p>
+<p>But what if we wanted to get only the area code. For that we use parantheses to mark out the groups</p>
 
 </div>
 </div>
@@ -11884,30 +11870,10 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">isPhoneNumber</span><span class="p">(</span><span class="s2">&quot;414-555-0000&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">phoneNumRegex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(\d\d\d)-(\d\d\d-\d\d\d\d)&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[2]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>True</pre>
-</div>
-
-</div>
-
 </div>
 </div>
 
@@ -11917,41 +11883,10 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">isPhoneNumber</span><span class="p">(</span><span class="s2">&quot;ldskfjksdjfl&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">matchobject</span> <span class="o">=</span> <span class="n">phoneNumRegex</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;my number is 434-343-4343&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>first 3 characters are not numbers
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[3]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>False</pre>
-</div>
-
-</div>
-
 </div>
 </div>
 
@@ -11961,7 +11896,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">isPhoneNumber</span><span class="p">(</span><span class="s2">&quot;4149555-0000&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">matchobject</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -11974,24 +11909,13 @@ div#notebook {
 
 <div class="output_area">
 
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>missing dash after the area code
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
 <div class="prompt output_prompt">Out[4]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>False</pre>
+<pre>&#39;434-343-4343&#39;</pre>
 </div>
 
 </div>
@@ -12005,7 +11929,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">isPhoneNumber</span><span class="p">(</span><span class="s2">&quot;414-555-000&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">matchobject</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12018,24 +11942,13 @@ div#notebook {
 
 <div class="output_area">
 
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>not 12 digits
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
 <div class="prompt output_prompt">Out[5]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>False</pre>
+<pre>&#39;434&#39;</pre>
 </div>
 
 </div>
@@ -12049,7 +11962,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">isPhoneNumber</span><span class="p">(</span><span class="s2">&quot;414-555-00a0&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">matchobject</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12062,24 +11975,13 @@ div#notebook {
 
 <div class="output_area">
 
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>last four characters are not numbers
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
 <div class="prompt output_prompt">Out[6]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>False</pre>
+<pre>&#39;343-4343&#39;</pre>
 </div>
 
 </div>
@@ -12092,7 +11994,16 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><br>But what if we have a message and want to find out if the phone number exists in that message<br> We do that the following way<br><br>First we will redefine our function so that it returns only true or false and does not print any message at all on the screen.</p>
+<p>Calling group() or group(0) returns the full matching string, group(1) returns the groups 1's matching string, and so on.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If the paranthesis are part of the string we have to use the escape character.</p>
 
 </div>
 </div>
@@ -12102,29 +12013,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">isPhoneNumber</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">12</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">False</span>
-
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">isdecimal</span><span class="p">():</span>
-            <span class="k">return</span> <span class="kc">False</span>
-
-    <span class="k">if</span> <span class="n">text</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;-&quot;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">False</span>
-
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">7</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">isdecimal</span><span class="p">():</span>
-            <span class="k">return</span> <span class="kc">False</span>
-
-    <span class="k">if</span> <span class="n">text</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;-&quot;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">False</span>
-
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">12</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">text</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">isdecimal</span><span class="p">():</span>
-            <span class="k">return</span> <span class="kc">False</span>
-
-    <span class="k">return</span> <span class="kc">True</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">phoneNumRegex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\(\d\d\d\)-\(\d\d\d-\d\d\d\d\)&quot;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12132,30 +12021,12 @@ div#notebook {
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Now our number finding function.</p>
-
-</div>
-</div>
-</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">numberFinder</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
-    <span class="n">foundNumber</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">message</span><span class="p">)):</span>
-        <span class="n">chunk</span> <span class="o">=</span> <span class="n">message</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">12</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">isPhoneNumber</span><span class="p">(</span><span class="n">chunk</span><span class="p">):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The number is &quot;</span> <span class="o">+</span> <span class="n">chunk</span><span class="p">)</span>
-            <span class="n">foundNumber</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="k">if</span> <span class="n">foundNumber</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;no numbers found in the message&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">foundNumber</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">matchobject</span> <span class="o">=</span> <span class="n">phoneNumRegex</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;my number is (434)-(343-4343)&quot;</span><span class="p">)</span>   <span class="c1">#the parantheses are added</span>
 </pre></div>
 
 </div>
@@ -12168,7 +12039,7 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">numberFinder</span><span class="p">(</span><span class="s2">&quot;Hey, you can call me on 414-444-5757 or if that number is not reachable you can use my other number 423-333-5555.&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">matchobject</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -12178,18 +12049,6 @@ div#notebook {
 <div class="output_wrapper">
 <div class="output">
 
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>The number is 414-444-5757
-The number is 423-333-5555
-</pre>
-</div>
-</div>
 
 <div class="output_area">
 
@@ -12199,7 +12058,7 @@ The number is 423-333-5555
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>True</pre>
+<pre>&#39;(434)-(343-4343)&#39;</pre>
 </div>
 
 </div>
@@ -12207,91 +12066,65 @@ The number is 423-333-5555
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><br /><br /><h2> The Pipe Character</h2></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The vertical bar above the enter key | is called the pipe character</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>What if we wanted to find all the words with a fixed prefix like batman batmobile which have bat as a prefix</p>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">numberFinder</span><span class="p">(</span><span class="s2">&quot;hi, 433-4343-4343&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">batRegex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;bat(man|mobile|copter|cave|bat)&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>no numbers found in the message
-</pre>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[10]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>False</pre>
-</div>
-
-</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The parantheses after the bat contains possible suffixes after the bat separated by the pipe character</p>
 
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">numberFinder</span><span class="p">(</span><span class="s2">&quot;423-333-3333&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">matchobject</span> <span class="o">=</span> <span class="n">batRegex</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;batman rides his batcopter and batmobile to his batcave. nanananannnan batbat. lol&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>The number is 423-333-3333
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[11]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>True</pre>
-</div>
-
-</div>
-
 </div>
 </div>
 
@@ -12301,20 +12134,7 @@ The number is 423-333-5555
 <div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">someMessage</span> <span class="o">=</span> <span class="s2">&quot;hello my number is 433-433-4343. Oops not that one, my real number is 333-444-2222. Ok bye now&quot;</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">numberFinder</span><span class="p">(</span><span class="n">someMessage</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">matchobject</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -12327,15 +12147,45 @@ The number is 423-333-5555
 
 <div class="output_area">
 
-<div class="prompt"></div>
+<div class="prompt output_prompt">Out[12]:</div>
 
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>The number is 433-433-4343
-The number is 333-444-2222
-</pre>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&#39;batman&#39;</pre>
+</div>
+
+</div>
+
 </div>
 </div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If we want to find only the suffix of the first appearance we can do that in the following way</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">matchobject</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
 
 <div class="output_area">
 
@@ -12345,7 +12195,7 @@ The number is 333-444-2222
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>True</pre>
+<pre>&#39;man&#39;</pre>
 </div>
 
 </div>
@@ -12358,7 +12208,7 @@ The number is 333-444-2222
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>THAT IS A LOT OF CODE!!</strong></p>
+<p>And the above returned only the first element</p>
 
 </div>
 </div>
@@ -12367,7 +12217,8 @@ The number is 333-444-2222
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2> re module</h2>
+<p>Defining matchobject using findall function on regex object</p>
+
 </div>
 </div>
 </div>
@@ -12376,95 +12227,54 @@ The number is 333-444-2222
 <div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">matchobject</span> <span class="o">=</span> <span class="n">batRegex</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;batman rides his batcopter and batmobile to his batcave. nanananannnan batbat. lol&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Regex strings oftern use \ backslashes (like \d), so they are often raw strings: r'\d'</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Calling the re.compile() function to create a regex object.<br> \d is the regex for numeric digit character.</p>
-
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">phoneNumRegex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\d\d\d-\d\d\d-\d\d\d\d&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">matchobject</span>
 </pre></div>
 
 </div>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+<div class="prompt output_prompt">Out[15]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&#39;man&#39;, &#39;copter&#39;, &#39;mobile&#39;, &#39;cave&#39;, &#39;bat&#39;]</pre>
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+
 </div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Call the regex object's search() method to create the match object</p>
 
 </div>
 </div>
+
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">someMessage</span> <span class="o">=</span> <span class="s2">&quot;hello my number is 433-433-4343. Oops not that one, my real number is 333-444-2222. Ok bye now&quot;</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">matchObjBlaBla</span> <span class="o">=</span> <span class="n">phoneNumRegex</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">someMessage</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>match objects have a method called group()</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">matchObjBlaBla</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>     <span class="c1">#to just print out the found element.</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">matchobject</span><span class="p">)):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;bat&quot;</span><span class="o">+</span><span class="n">matchobject</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 </pre></div>
 
 </div>
@@ -12481,127 +12291,11 @@ The number is 333-444-2222
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>433-433-4343
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">matchObjBlaBla</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>&lt;_sre.SRE_Match object; span=(19, 31), match=&#39;433-433-4343&#39;&gt;
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>It gave out only one occurance, for all occurences, we use findall() method on regex object.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">matchObjBlaBla</span> <span class="o">=</span> <span class="n">phoneNumRegex</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">someMessage</span><span class="p">)</span>   <span class="c1">#this will return a list value</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">matchObjBlaBla</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-intense-fg ansi-bold">---------------------------------------------------------------------------</span>
-<span class="ansi-red-intense-fg ansi-bold">AttributeError</span>                            Traceback (most recent call last)
-<span class="ansi-green-intense-fg ansi-bold">&lt;ipython-input-21-1d06ddbf6fe9&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span><span class="ansi-blue-intense-fg ansi-bold">()</span>
-<span class="ansi-green-intense-fg ansi-bold">----&gt; 1</span><span class="ansi-yellow-intense-fg ansi-bold"> </span>print<span class="ansi-yellow-intense-fg ansi-bold">(</span>matchObjBlaBla<span class="ansi-yellow-intense-fg ansi-bold">.</span>group<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">)</span>
-
-<span class="ansi-red-intense-fg ansi-bold">AttributeError</span>: &#39;list&#39; object has no attribute &#39;group&#39;</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[22]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">matchObjBlaBla</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[&#39;433-433-4343&#39;, &#39;333-444-2222&#39;]
+<pre>batman
+batcopter
+batmobile
+batcave
+batbat
 </pre>
 </div>
 </div>
@@ -12643,6 +12337,7 @@ The number is 333-444-2222
   <!-- Control Center for Material Kit: activating the ripples, parallax effects, scripts from the example pages etc -->
   <script src="../assets/js/material-kit.js" type="text/javascript"></script>
   
+
 
 
 
